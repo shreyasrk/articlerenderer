@@ -2,8 +2,9 @@ from django.http import HttpResponse
 
 from .models import Article
 
-# Create your views here.
+
 def index(request):
     article_list = Article.objects.order_by('-publ_date')[:5]
-    return HttpResponse(article_list)
-
+    response = HttpResponse(article_list, content_type='application/jpeg')
+    response['Content-Disposition'] = 'attachment; filename="foo.jpg"'
+    return response
